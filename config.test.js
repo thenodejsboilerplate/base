@@ -1,13 +1,13 @@
 module.exports = {
-  port:  process.env.PORT || 8000,
+  port: process.env.PORT || 8000,//PORT=9000 node app
   host: 'http://localhost:8000',
   mongodb: {
     dbname: 'db1',
-    host: 'localhost',//'192.168.3.148',//10.184.1.209
+    host: 'localhost',
     port:27017,
     user:'',
     pass: '',
-    uri: 'mongodb://localhost:27017/db1',//'mongodb://10.184.1.209:27017/crawler',
+    uri: 'mongodb://localhost:27017/db1',
     options: {
       server: {
         poolSize: 5,
