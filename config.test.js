@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.SPIDER_API_PORT || 8000,
+  port:  process.env.PORT || 8000,
   host: 'http://localhost:8000',
   mongodb: {
     dbname: 'db1',
