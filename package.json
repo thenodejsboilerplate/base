@@ -1,0 +1,22 @@
+{
+  "name": "base",
+  "version": "0.0.1",
+  "description": "boilerplate for a nodejs app using express(without its generator)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thenodejsboilerplate/base.git"
+  },
+  "keywords": [
+    "base"
+  ],
+  "author": "Frank Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thenodejsboilerplate/base/issues"
+  },
+  "homepage": "https://github.com/thenodejsboilerplate/base#readme"
+}
