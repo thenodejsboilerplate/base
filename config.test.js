@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.PORT || 8000,//PORT=9000 node app
+  port: process.env.PORT || '8000',//PORT=9000 node app
   host: 'http://localhost:8000',
   mongodb: {
     dbname: 'db1',

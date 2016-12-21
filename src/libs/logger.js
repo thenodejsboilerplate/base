@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const config = require('../common/get-config');
 const env = process.env.NODE_ENV || 'develop';
 
@@ -49,3 +49,5 @@ const logger = new (winston.Logger)({
     })
   ]
 });
+
+module.exports = logger;
