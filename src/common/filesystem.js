@@ -24,7 +24,6 @@ const exists = (dirpath) => {
   });
 };
 
-
 /**
  * 遍历该文件夹，获取所有文件。
  *
@@ -35,10 +34,9 @@ const readdir = (dirname) => {
   return fs.readdirSync(dirname).map(filename => {
     const filePath = resolve(dirname, filename);
     const stat = fs.statSync(filePath);
-    if (stat.isDirectory())
-      return readdir(filePath);
-    else if (stat.isFile())
+    if (stat.isDirectory()) { return readdir(filePath); } else if (stat.isFile()) {
       return [filePath];
+    }
   }).reduce((files, e) => [...files, ...e], []);
 };
 
@@ -51,15 +49,14 @@ const readdir = (dirname) => {
 const mkdirRecursion = (dirpath) => {
   return exists(dirpath)
         .then((existence) => {
-          if (!existence)
+          if (!existence) {
             return mkdirRecursion(dirname(dirpath))
                     .then(() => {
                       return mkdir(dirpath);
                     });
+          }
         });
 };
-
-
 
 module.exports = {
   readdir,

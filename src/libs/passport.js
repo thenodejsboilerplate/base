@@ -13,7 +13,6 @@ const validator = require('validator'),
   xss = require('xss');
 // expose this function to our app using module.exports
 module.exports = function (passport) {
-
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -22,8 +21,8 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session;
     // In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
-    //In this example, only the user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.
-    //essentially it allows you to stay logged-in when navigating between different pages within your application.
+    // In this example, only the user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.
+    // essentially it allows you to stay logged-in when navigating between different pages within your application.
   passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
@@ -48,11 +47,9 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
         function (req, email, password, done) {
-
             // asynchronous
             // User.findOne wont fire unless data is sent back
           process.nextTick(function () {
-
             const username = validator.trim(xss(req.body.username));
             const passwordConfirmation = validator.trim(xss(req.body.confirmPassword));
 
@@ -69,14 +66,12 @@ module.exports = function (passport) {
                             // find a user whose email is the same as the forms email
                             // we are checking to see if the user trying to login already exists
                   User.findOne({ 'local.email': email }, function (err, user) {
-
                                 // if there are any errors, return the error
                     if (err) { return done(err); }
 
                                 // check to see if theres already a user with that email
                     if (user) {
                       return done(null, false, req.flash('error', '邮箱已被占用！'));
-
                     } else {
                       if (passwordConfirmation === password) {
                                         // if there is no user with that email
@@ -89,7 +84,7 @@ module.exports = function (passport) {
                         newUser.local.username = username;
                         if (req.body.course) {
                           newUser.local.interestedCourse = req.body.course;
-                                            //console.log(`req.body.course ${req.body.course}`);
+                                            // console.log(`req.body.course ${req.body.course}`);
                         }
 
                                         // save the user
@@ -100,31 +95,14 @@ module.exports = function (passport) {
                       } else {
                         return done(null, false, req.flash('error', '两次密码不符!'));
                       }
-
-
-
-
-
-
                     }
-
                   });
-
                 }
               }
-
-
-
             });
-
-
-
           });
-
         }));
-    /***End of signup session setup***/
-
-
+    /** *End of signup session setup***/
 
     // =========================================================================
     // LOCAL LOGIN =============================================================
@@ -138,7 +116,8 @@ module.exports = function (passport) {
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
-        function (req, email, password, done) { // callback with email and password from our form
+        function (req, email, password, done) {
+ // callback with email and password from our form
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
@@ -153,8 +132,6 @@ module.exports = function (passport) {
 
                 // if the user is found but the password is wrong
 
-
-
             if (!user.validPassword(password)) {
               return done(null, false, req.flash('error', '密码错误')); // create the loginMessage and save it to session as flashdata
             }
@@ -162,11 +139,6 @@ module.exports = function (passport) {
                 // all is well, return successful user
             return done(null, user);
           });
-
         }));
-    /***End of login session setup***/
-
-
-
-
+    /** *End of login session setup***/
 };

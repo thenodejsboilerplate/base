@@ -7,26 +7,24 @@ const fixtures = require('pow-mongodb-fixtures').connect(mongodb.dbname, {
   pass: mongodb.pass
 });
 
-function clearAll() {
+function clearAll () {
   return new Promise((resolve, reject) => {
-    fixtures.clear(function(err) {
-      if(err) {
+    fixtures.clear(function (err) {
+      if (err) {
         reject();
-      }
-      else {
+      } else {
         resolve();
       }
     });
   });
 }
 
-function clearAllAndLoad(data) {
+function clearAllAndLoad (data) {
   return new Promise((resolve, reject) => {
-    fixtures.clearAllAndLoad(data, function(err) {
-      if(err) {
+    fixtures.clearAllAndLoad(data, function (err) {
+      if (err) {
         reject();
-      }
-      else {
+      } else {
         resolve();
       }
     });

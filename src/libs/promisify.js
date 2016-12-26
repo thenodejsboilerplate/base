@@ -9,15 +9,14 @@ module.exports = {
      *  With the generators functions already being available and with the upcoming async functions your modules (the ones published to NPM) should expose an error-first callback interface with Promise support.
       Why? To provide backward compatibility a callback interface has to be provided, and for future compatibility you will need the Promise support as well.
      * usage: let promise = readFile("example.txt");...
-     */  
-  readFile: (filename, callback = function(){}) => {
-
-    return new Promise(function(resolve, reject) {         
-            //fs.readFile(file[, options], callback)
-            //see https://nodejs.org/api/fs.html#fs_fs_readfile_file_options_callback
-      fs.readFile(filename, { encoding: 'utf8' }, function(err, contents) {
-          //If no encoding is specified, then the raw buffer is returned.that's contents if a buffer if no encoding
-          //If options is a string, then it specifies the encoding.
+     */
+  readFile: (filename, callback = function () {}) => {
+    return new Promise(function (resolve, reject) {
+            // fs.readFile(file[, options], callback)
+            // see https://nodejs.org/api/fs.html#fs_fs_readfile_file_options_callback
+      fs.readFile(filename, { encoding: 'utf8' }, function (err, contents) {
+          // If no encoding is specified, then the raw buffer is returned.that's contents if a buffer if no encoding
+          // If options is a string, then it specifies the encoding.
         if (err) {
           reject(err);
           return callback(err);
@@ -25,16 +24,8 @@ module.exports = {
 
         resolve(contents);
         return callback(null, contents);
-
       });
     });
+  }
 
-  },  
-
-
-
-
-
-
-     
 };
