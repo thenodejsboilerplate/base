@@ -121,35 +121,39 @@ userSchema.pre('findOneAndUpdate', function (next) {
 });
 
 // methods ======================
-// generating a hash
-userSchema.methods.generateHash = password => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
 
+
+userSchema.methods({
+  // generating a hash
+  generateHash: password => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  },  
 // checking if password is valid
 
 // in arrow-functions , the 'this'' value of the following statement is : window; // or the global object
 // as to arrow function inside a function,  it's the this of the outer function
 // arrow function expressions are best suited for non-method functions.
-userSchema.methods.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.local.password);
-};
+  validPassword: function (password) {
+    return bcrypt.compareSync(password, this.local.password);
+  },
 
-userSchema.methods.time = time => {
-  return moment(time).format('L');
-};
+  time: time => {
+    return moment(time).format('L');
+  },
 
-userSchema.methods.processUser = user => {
-  return {
-    _id: user._id,
-    username: user.local.username,
-    email: user.local.email,
-    active: user.local.active,
-    created_at: moment(user.local.created_at).format('L'),
-    updated_at: moment(user.local.updated_at).format('L')
+  processUser: user => {
+    return {
+      _id: user._id,
+      username: user.local.username,
+      email: user.local.email,
+      active: user.local.active,
+      created_at: moment(user.local.created_at).format('L'),
+      updated_at: moment(user.local.updated_at).format('L')
 
-  };
-};
+    };
+  }
+
+});
 
 // the schema is useless so far
 // we need to create a model using it

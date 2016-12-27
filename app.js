@@ -6,8 +6,9 @@ const path = require('path');
 const morgan = require('morgan');
 
 // var favicon = require('serve-favicon');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser'), 
+  bodyParser = require('body-parser');
+
 
 const	app = express();
 
@@ -29,6 +30,27 @@ require('./src/libs/helmet')(app);
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
+
+
+	//redis session starts:
+
+    //we can restore any data using req.session and you can get it automatically in every subsequent request from the same client; Express uses memories to store session data so that the session date will be lost if you close your app or the app clashes; so we can use Redis or Mongodb to store the session data;
+  //session = require('express-session');
+
+	// Create express-session and pass it to connect-redis object as parameter. This will initialize it.
+//const redisStore = require('connect-redis')(session);
+	//Then in session middle ware, pass the Redis store information such as host, port and other required parameters.
+// const client = require('./lib/redis');
+
+// app.use(session({
+//   secret: config.session_secret,
+//   cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+// 		// create new redis store.
+//   store: new redisStore({port:config.db.redis.port, host:config.db.redis.host,pass:config.db.redis.pw, ttl:  config.db.redis.ttl}),//Redis session TTL (expiration) in seconds
+// 		//saveUninitialized: false,
+// 		//resave: false
+// }));
+
 
 //HTTP request logger middleware for node.js
 app.use(morgan('dev'));
