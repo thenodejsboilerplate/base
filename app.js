@@ -35,6 +35,7 @@ require('./src/libs/helmet')(app);
 	//redis session starts:
 
     //we can restore any data using req.session and you can get it automatically in every subsequent request from the same client; Express uses memories to store session data so that the session date will be lost if you close your app or the app clashes; so we can use Redis or Mongodb to store the session data;
+    
   //session = require('express-session');
 
 	// Create express-session and pass it to connect-redis object as parameter. This will initialize it.
