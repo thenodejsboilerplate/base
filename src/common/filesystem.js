@@ -1,25 +1,22 @@
-'use strict';
-const fs = require('fs');
-const {
-    resolve,
-    basename,
-    extname,
-    dirname
-} = require('path');
+let adirpath = '../../mydir/subdir/subbbsi';
+let {resolve, dirname} = require('path');
+let fs = require('fs');
 
+const exists = (dirpath) => {
+  return new Promise((resolve, reject) => {
+    fs.stat(dirpath, (err, stats) => {
+      if(err) {
+        reject(err);
+      }
+      resolve(stats);
+    });
+  });
+};
 const mkdir = (dirpath) => {
   return new Promise((resolve, reject) => {
     fs.mkdir(dirpath, (err) => {
       if (err) reject(err);
       else resolve();
-    });
-  });
-};
-
-const exists = (dirpath) => {
-  return new Promise((resolve) => {
-    fs.exists(dirpath, (existence) => {
-      resolve(existence);
     });
   });
 };
@@ -34,9 +31,10 @@ const readdir = (dirname) => {
   return fs.readdirSync(dirname).map(filename => {
     const filePath = resolve(dirname, filename);
     const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) { return readdir(filePath); } else if (stat.isFile()) {
+    if(stat.isDirectory())
+      return readdir(filePath);
+    else if(stat.isFile())
       return [filePath];
-    }
   }).reduce((files, e) => [...files, ...e], []);
 };
 
@@ -48,15 +46,17 @@ const readdir = (dirname) => {
  */
 const mkdirRecursion = (dirpath) => {
   return exists(dirpath)
-        .then((existence) => {
-          if (!existence) {
-            return mkdirRecursion(dirname(dirpath))
-                    .then(() => {
-                      return mkdir(dirpath);
-                    });
-          }
-        });
+    .catch((err) => {
+      //避免出现其他错误情况，只在文件或文件夹不存在情况下创建
+      if(err.code === 'ENOENT'){
+        return mkdirRecursion(dirname(dirpath))
+            .then(() => {
+              return mkdir(dirpath);
+            });
+      }
+    });
 };
+
 
 module.exports = {
   readdir,

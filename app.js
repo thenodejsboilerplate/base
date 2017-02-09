@@ -77,7 +77,7 @@ app.use(function (err, req, res, next) {
   // res.locals.message = err.message;
   // res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  let error = env === 'test' ? (err.message ? err.message : err.stack) : 'error';
+  let error = env === 'test' ? err.stack : 'error';
   logger.error(`Error: ${err.message ? err.message : err.stack}`);
   res.status(err.status || 500);
   res.json(error);
