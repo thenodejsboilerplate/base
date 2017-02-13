@@ -1,6 +1,16 @@
-let adirpath = '../../mydir/subdir/subbbsi';
-let {resolve, dirname} = require('path');
-let fs = require('fs');
+'use strict';
+const fs = require('fs');
+const { resolve, dirname } = require('path');
+const log = require('debug')('debug');
+
+const mkdir = (dirpath) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dirpath, (err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+};
 
 const exists = (dirpath) => {
   return new Promise((resolve, reject) => {
@@ -12,14 +22,7 @@ const exists = (dirpath) => {
     });
   });
 };
-const mkdir = (dirpath) => {
-  return new Promise((resolve, reject) => {
-    fs.mkdir(dirpath, (err) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
-};
+
 
 /**
  * 遍历该文件夹，获取所有文件。
@@ -46,19 +49,38 @@ const readdir = (dirname) => {
  */
 const mkdirRecursion = (dirpath) => {
   return exists(dirpath)
+    .then(function(stats){
+      log('File Eixst');
+      return Promise.resolve();
+    })
     .catch((err) => {
-      //避免出现其他错误情况，只在文件或文件夹不存在情况下创建
       if(err.code === 'ENOENT'){
         return mkdirRecursion(dirname(dirpath))
             .then(() => {
               return mkdir(dirpath);
             });
       }
+      throw new Error('文件不可使用');
+      // return Promise.resolve();
     });
 };
 
+const mkdirSync = (dirpath) => {
+  try {
+    let exist = fs.existsSync(dirpath);
+    if(!exist) {
+      log('making dir'+ resolve(dirpath));
+      fs.mkdirSync(dirpath);
+    }
+  } catch (e) {
+    throw new Error('文件不可使用');
+  }
+  log('crreated'+ resolve(dirpath));
+  return;
+};
 
 module.exports = {
   readdir,
-  mkdirRecursion
+  mkdirRecursion,
+  mkdirSync
 };
