@@ -1,20 +1,23 @@
 /**
  * config
  */
-'use strict';
-const path = require('path');
-const appDir = path.dirname(require.main.filename);
+'use strict'
+const path = require('path')
+const appDir = path.dirname(require.main.filename)
 
-var child_process = require('child_process');
-let hostname;
-let dbUsername = process.env.dbUsername;
-let dbPassword = process.env.dbPassword;
-let mongoPort = process.env.MongoPort || 27017;
-console.log(dbUsername, dbPassword,mongoPort);
+var childProcess = require('child_process')
+let hostname
+let dbUsername = process.env.dbUsername
+let dbPassword = process.env.dbPassword
+let mongoPort = process.env.MongoPort || 27017
+console.log(dbUsername, dbPassword, mongoPort)
 
-child_process.exec('hostname -f', function(err, stdout, stderr) {
-  hostname = stdout.trim();
-});
+childProcess.exec('hostname -f', function (err, stdout, stderr) {
+  if (err) {
+    console.log(err)
+  }
+  hostname = stdout.trim()
+})
 
 var config = {
   // debug 为 true 时，用于本地调试
@@ -22,34 +25,34 @@ var config = {
   env: 'product',
   yearlyCharge: 588,
   trialCharge: 99,
-  contractVipYear: 8,//month long
+  contractVipYear: 8, // month long
   host: hostname,
 
-  uploadDir: path.join(appDir,'public/upload/'),
+  uploadDir: path.join(appDir, 'public/upload/'),
 
   // mongodb 配置
   db: {
-    mongo:{
+    mongo: {
       port: mongoPort,
-      uri: `mongodb://localhost:${mongoPort}`,//?authSource=groupForum
+      uri: `mongodb://localhost:${mongoPort}/test`, // ?authSource=groupForum
       options: {
         user: dbUsername || '',
         pass: dbPassword || '',
-        db: {reconnectTries: Number.MAX_VALUE },
+        db: { reconnectTries: Number.MAX_VALUE },
         server: {
-          poolSize: 5,
-        },
-      },
+          poolSize: 5
+        }
+      }
     },
-    redis:{
-        //redis config, default to the localhost
-      'host':'127.0.0.1',
-      'port':'6379',
-      'db':'0',
-      'pw':'',
-      'ttl':1000 * 60 * 60 * 24 * 30
-    },          
-  }, 
+    redis: {
+        // redis config, default to the localhost
+      'host': '127.0.0.1',
+      'port': '6379',
+      'db': '0',
+      'pw': '',
+      'ttl': 1000 * 60 * 60 * 24 * 30
+    }
+  },
 
   session_secret: 'node_site_secret', // 务必修改
   auth_cookie_name: 'node_site',
@@ -68,7 +71,7 @@ var config = {
     auth: {
       user: 'admin@trver.com',
       pass: 'trver123456'
-    },
+    }
   },
 
   // admin 可删除话题，编辑标签。把 user_login_name 换成你的登录名
@@ -86,16 +89,16 @@ var config = {
   tabs: [
     ['share', '分享'],
     ['ask', '问答'],
-    ['job', '招聘'],
+    ['job', '招聘']
   ],
 
   create_post_per_day: 1000, // 每个用户一天可以发的主题数
   create_reply_per_day: 1000, // 每个用户一天可以发的评论数
-  visit_per_day: 1000, // 每个 ip 每天能访问的次数
-};
-
-if (process.env.NODE_ENV === 'test') {
-  config.db = 'mongodb://127.0.0.1/db_name_test';
+  visit_per_day: 1000 // 每个 ip 每天能访问的次数
 }
 
-module.exports = config;
+if (process.env.NODE_ENV === 'test') {
+  config.db = 'mongodb://127.0.0.1/db_name_test'
+}
+
+module.exports = config

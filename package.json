@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "watch": "./node_modules/.bin/webpack --config webpack.config.js --watch"
   },
   "repository": {
     "type": "git",
@@ -34,7 +36,13 @@
     "xss": "^0.3.3"
   },
   "devDependencies": {
+    "babel-core": "6.24.0",
+    "babel-loader": "6.4.1",
+    "babel-preset-latest": "6.24.0",
+    "extract-text-webpack-plugin": "github:webpack-contrib/extract-text-webpack-plugin",
     "heapdump": "0.3.7",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "style-loader": "0.14.1",
+    "webpack": "2.2.1"
   }
 }
