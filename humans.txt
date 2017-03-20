@@ -3,11 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Frank -- Full Stack  Developer -- frank25184@sina.com
 
 # THANKS
 
-    <name>
+    the authors the boilerplate based on
 
 # TECHNOLOGY COLOPHON
 
