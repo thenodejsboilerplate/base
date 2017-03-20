@@ -2,6 +2,11 @@
 let path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const extractSass = new ExtractTextPlugin({
+  filename: 'src/public/css/app.css',
+  disable: process.env.NODE_ENV === 'development'
+})
+
 module.exports = {
   entry: './src/public/js/index.js',
   output: {
@@ -20,28 +25,25 @@ module.exports = {
           path.resolve(__dirname, 'src/public/js')
         ],
         loader: 'babel-loader'
+      },
+      {
+        test: /\.scss$/,
+        include: [
+          path.resolve(__dirname, 'src/public/scss')
+        ],
+        use: extractSass.extract({
+          use: [{
+            loader: 'css-loader'
+          }, {
+            loader: 'sass-loader'
+          }],
+          // use style-loader in development
+          fallback: 'style-loader'
+        })
       }
-    //   {
-    //     test: /\.scss$/,
-    //     include: [
-    //       path.resolve(__dirname, 'src/public/scss')
-    //     ],
-    //     use: ExtractTextPlugin.extract('css!sass')
-    //   }
-    //   {
-    //     test: /\.sass$/,
-    //     use: [
-    //       'style-loader'
-    //     ]
-    //   }
     ]
   },
   plugins: [
-    // new ExtractTextPlugin('src/public/css/app.css')
-    // if you want to pass in options, you can do so:
-    new ExtractTextPlugin({
-      filename: 'src/public/css/app.css'
-    })
+    extractSass
   ]
-
 }
