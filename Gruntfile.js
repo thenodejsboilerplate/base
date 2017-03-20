@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           '<%= paths.release %>/app.min.css'
         ],
         dest: [
-          'src/views/index.handlebars' // change it according to the project's root file
+          'src/views/shares/main.handlebars' // change it according to the project's root file
         ]
       }
     },
