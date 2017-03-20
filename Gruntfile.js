@@ -53,7 +53,7 @@ module.exports = function (grunt) {
       target: {
         files: [
           {
-            '<%= paths.release %>/app.min.css': ['<%= paths.css %>/*.css', '!<%= paths.css %>/app.css']
+            '<%= paths.release %>/app.min.css': ['<%= paths.css %>/*.css', '!<%= paths.css %>/app.css.map']
           }
         ]
       }
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           '<%= paths.release %>/app.min.css'
         ],
         dest: [
-          'views/index.handlebars' // change it according to the project's root file
+          'src/views/index.handlebars' // change it according to the project's root file
         ]
       }
     },
