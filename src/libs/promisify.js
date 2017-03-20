@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('fs');
 var logger = require('./logger');
+const childProcess = require('child_process');
 module.exports = {
      /**
      * produce promise for fs.readFile
@@ -26,6 +27,26 @@ module.exports = {
         return callback(null, contents);
       });
     });
-  }
+  },
+
+  childProcessExec: function(cmd, callback  = function () {}){
+    //logger.debug('into childProcessExec in promisify module');
+    return new Promise(function(resolve, reject){
+      childProcess.exec(cmd, function(err, stdout,stderr){
+        if(err){
+          reject(err);
+          return callback(err);
+        }
+        resolve(stdout);
+
+        return callback(null, stdout, stderr);
+
+      });
+    });
+
+
+  },
+
+
 
 };

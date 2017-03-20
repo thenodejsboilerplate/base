@@ -4,11 +4,11 @@ const logger = require('./src/libs/logger');
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const config = require('./src/common/get-config');
 
 // var favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser'), 
   bodyParser = require('body-parser');
-
 
 const	app = express();
 
@@ -56,9 +56,8 @@ require('./src/libs/helmet')(app);
 //HTTP request logger middleware for node.js
 app.use(morgan('dev'));
 
-
 // examples for learning purposes
-require('./examples/file');
+//require('./examples/file');
 
 //routes
 require('./src/routes/routes')(app);
@@ -81,6 +80,10 @@ app.use(function (err, req, res, next) {
   logger.error(`Error: ${err.message ? err.message : err.stack}`);
   res.status(err.status || 500);
   res.json(error);
+});
+
+app.listen(config.port, function() {
+  console.log('%s listening at %s', app.name, app.url);
 });
 
 module.exports = app;
